@@ -5,6 +5,7 @@ class PlacesController < ApplicationController
   # GET /places.json
   def index
     @places = Place.all
+    render json: {data:places},status: :ok
   end
 
   # GET /places/1
@@ -29,7 +30,7 @@ class PlacesController < ApplicationController
     respond_to do |format|
       if @place.save
         format.html { redirect_to @place, notice: 'Place was successfully created.' }
-        format.json { render :show, status: :created, location: @place }
+        format.json { render :show, status: :created, location: @place  }
       else
         format.html { render :new }
         format.json { render json: @place.errors, status: :unprocessable_entity }
