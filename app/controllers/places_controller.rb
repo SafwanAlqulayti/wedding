@@ -5,12 +5,16 @@ class PlacesController < ApplicationController
   # GET /places.json
   def index
     @places = Place.all
-     
-  end
+
+   end
 
   # GET /places/1
   # GET /places/1.json
   def show 
+    @place = Place.find(params[:id]) 
+    render json: {status:'SUCCESS',message:'Louded place',data:@place},status: :ok
+
+
   end
 
   # GET /places/new
@@ -27,15 +31,11 @@ class PlacesController < ApplicationController
   def create
     @place = Place.new(place_params)
 
-    respond_to do |format|
-      if @place.save
-        format.html { redirect_to @place, notice: 'Place was successfully created.' }
-        format.json { render :show, status: :created,data:@place, location: @place  }
-      else
-        format.html { render :new }
-        format.json { render json: @place.errors, status: :unprocessable_entity }
-      end
-    end
+ 
+       @place.save
+ 
+       
+ 
   end
 
   # PATCH/PUT /places/1
@@ -70,6 +70,6 @@ class PlacesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def place_params
-      params.require(:place).permit(:name, :locathion,:img)
+      params.require(:place).permit(:name,:locathion,:img)
     end
 end
